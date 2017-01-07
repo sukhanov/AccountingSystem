@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html ng-app="accounting-system">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="src/css/main.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="content">
+            <span class="menu-item" ui-sref="transactions" ui-sref-active="active">Transactions</span>
+            <span class="menu-item" ui-sref="validations" ui-sref-active="active">Transfer</span>
+            <span class="right" id="browserInfo"></span>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="content">
+            <div ui-view></div>
+        </div>
+    </div>
+    <script src="src/lib/angular.min.js"></script>
+    <script src="src/lib/angular-ui-router.min.js"></script>
+    <script src="src/app.js"></script>
+    <script src="src/validations/validations.controller.js"></script>
+    <script src="src/transactions/transactions.controller.js"></script>
+    <script src="src/js/browserCheck.js"></script>
+</body>
+</html>

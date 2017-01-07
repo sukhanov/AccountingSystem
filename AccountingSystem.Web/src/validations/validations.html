@@ -1,0 +1,22 @@
+﻿<div class="transfer-section">
+    <div class="inline-block block-400">
+        <h4>Input card number:</h4>
+        <input type="text" class="input-control" ng-model="$ctrl.cardNumber" ng-change="$ctrl.checkCard()" numbers-only/>
+    </div>
+    <div class="inline-block block-400">
+        <h4>Card Type:</h4>
+        <span ng-bind="$ctrl.cardType"></span>
+    </div>
+</div>
+<div class="transfer-section">
+    <div class="inline-block block-400">
+        <h4>Phone (autoformat after blur):</h4>
+        <input type="text" class="input-control" ng-model="$ctrl.phone" ng-blur="$ctrl.checkPhone()"/>
+    </div>
+</div>
+<div class="transfer-section">
+    <div class="inline-block block-400">
+        <h4>Amount (autoformat after blur):</h4>
+        <input type="text" class="input-control" ng-model="$ctrl.number" ng-blur="$ctrl.checkNumber()" decimal-only/>
+    </div>
+</div>

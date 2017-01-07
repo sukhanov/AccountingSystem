@@ -1,0 +1,104 @@
+﻿* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Verdana";
+}
+
+.header {
+    height: 40px;
+    background: black;
+    font-size: 13pt;
+    color: white;
+}
+
+.menu-item {
+    margin-right: 10px;
+    cursor: pointer;
+    line-height: 36px;
+}
+
+.menu-item:hover {
+    opacity: 0.5;
+}
+
+.menu-item.active {
+    font-size: 16pt;
+}
+
+.content {
+    width: 900px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    margin-top: 25px;
+}
+
+.input-control {
+    width: 350px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.block-400 {
+    width: 400px;
+}
+
+.block-650 {
+    width: 650px;
+}
+
+.block-230 {
+    width: 230px;
+}
+
+.transfer-section {
+    margin-bottom: 25px;
+}
+
+table {
+    font-size: 11pt;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead {
+    background-color: darkgray;
+}
+
+td {
+   border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
+.new-trans {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.transactions-item {
+    margin-bottom: 25px;
+}
+
+.w150 {
+    width: 150px;
+}
+
+.form-control {
+    font-size: 11pt;
+}
+.form-control select, .form-control input {
+    width: 100%;
+}
+
+.right {
+    float: right;
+}
+
+.mt18 {
+    margin-top: 18px;
+}
