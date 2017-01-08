@@ -124,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="error.html" />
     <Content Include="index.html" />
     <Content Include="src\app.js" />
     <Content Include="Global.asax" />
@@ -131,6 +132,8 @@
     <Content Include="src\js\browserCheck.js" />
     <Content Include="src\lib\angular-ui-router.min.js" />
     <Content Include="src\lib\angular.min.js" />
+    <Content Include="src\balances\balances.controller.js" />
+    <Content Include="src\balances\balances.html" />
     <Content Include="src\transactions\transactions.html" />
     <Content Include="src\validations\validations.html" />
     <Content Include="Web.config">
@@ -141,6 +144,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\api\BalanceController.cs" />
     <Compile Include="Controllers\api\BaseApiController.cs" />
     <Compile Include="Controllers\api\ClientController.cs" />
     <Compile Include="Controllers\api\CurrencyController.cs" />
@@ -149,8 +153,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FilterIPAttribute.cs" />
+    <Compile Include="MapperConfigs\BalanceModel2BalnceViewModelMapperConfig.cs" />
     <Compile Include="MapperConfigs\NewTr2TrModelMapperConfig.cs" />
     <Compile Include="MapperConfigs\Tr2TrGridItemModelMapperConfig.cs" />
+    <Compile Include="Models\BalanceViewModel.cs" />
     <Compile Include="Models\TransactionGridItemViewModel.cs" />
     <Compile Include="Models\NewTransaction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,7 +207,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>37959</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44362/</IISUrl>
+          <IISUrl>https://localhost:44363/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44363/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

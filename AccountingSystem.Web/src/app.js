@@ -18,6 +18,14 @@ var accountingSystemApp = angular
                 templateUrl: 'src/transactions/transactions.html',
                 onEnter: function ($window) { $window.document.title = "Transactions"; }
             })
+             .state('balances',
+            {
+                url: '/balances',
+                controller: BalancesController,
+                controllerAs: '$ctrl',
+                templateUrl: 'src/balances/balances.html',
+                onEnter: function ($window) { $window.document.title = "Balances"; }
+            })
             .state('validations',
             {
                 url: '/validations',

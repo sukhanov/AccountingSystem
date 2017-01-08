@@ -14,7 +14,7 @@ function TransactionsController($scope, transactionsService, clientService, curr
     };
 
     var self = this;
-    self.newTransaction = defaultTr;
+    self.newTransaction = {};
     self.transactions = [];
     self.clients = [];
     self.currencies = [];
@@ -74,9 +74,14 @@ function TransactionsController($scope, transactionsService, clientService, curr
         });
     }
 
-    function setDefaulTransaction(parameters) {
+    function setDefaulTransaction() {
         if (currenciesLoad && clientsLoad && typesLoad)
-            self.newTransaction = defaultTr;
+            self.newTransaction = {
+                amount: defaultTr.amount,
+                client: defaultTr.client,
+                currency: defaultTr.currency,
+                type: defaultTr.type
+            };
     }
 
     getSelects();
@@ -127,7 +132,7 @@ function TransactionsService($http) {
                 headers: {
                     'Application': 'Accounting-System'
                 },
-                data
+                data: data
             }
             return $http(req);
         }

@@ -1,0 +1,10 @@
+﻿<div>
+    <div class="w150 form-control mb20">
+        <select ng-model="$ctrl.client" ng-change="$ctrl.changeClient()">
+            <option ng-repeat="client in $ctrl.clients" value="{{client.Value}}">{{client.Text}}</option>
+        </select>
+    </div>
+    <div ng-repeat="balance in $ctrl.balances">
+        {{balance.Currency}}: {{balance.Amount}}
+    </div>
+</div>

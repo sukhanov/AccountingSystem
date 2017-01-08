@@ -102,3 +102,16 @@ td {
 .mt18 {
     margin-top: 18px;
 }
+
+.mb20 {
+    margin-bottom: 20px;
+}
+
+
+.browserError {
+    font-size: 20pt;
+}
+
+.browserErrorSmall {
+    font-size: 16pt;
+}

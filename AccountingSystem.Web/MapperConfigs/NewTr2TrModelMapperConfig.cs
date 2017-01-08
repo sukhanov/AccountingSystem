@@ -1,5 +1,4 @@
-﻿using System;
-using AccountingSyatem.Shared.Automapper;
+﻿using AccountingSyatem.Shared.Automapper;
 using AccountingSystem.Services.Models;
 using AccountingSystem.Web.Models;
 using AutoMapper;

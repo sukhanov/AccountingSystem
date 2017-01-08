@@ -12,6 +12,7 @@ namespace AccountingSystem.Services.Modules
             Bind<ITransactionService>().To<TransactionService>().InRequestScope();
             Bind<ICurrencyService>().To<CurrencyService>().InRequestScope();
             Bind<IClientService>().To<ClientService>().InRequestScope();
+            Bind<IBalanceService>().To<BalanceService>().InRequestScope();
         }
     }
 }
