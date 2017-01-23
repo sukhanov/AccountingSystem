@@ -16,9 +16,6 @@ namespace AccountingSystem.Web.Controllers.api
 
         public object GetForSelect()
         {
-            if (CheckHeader() == HttpStatusCode.Forbidden)
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "403 Error");
-
             var items = _clientService.GetAll().Select(n => new
             {
                 Value = n.Id.ToString(),

@@ -17,9 +17,6 @@ namespace AccountingSystem.Web.Controllers.api
 
         public object GetForClient(int clientId)
         {
-            if (CheckHeader() == HttpStatusCode.Forbidden)
-                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "403 Error");
-
             var items = _balanceService.GetForClient(clientId).Select(new BalanceViewModel());
             return items;
         }

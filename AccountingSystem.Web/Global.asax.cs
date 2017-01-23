@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -11,6 +10,8 @@ namespace AccountingSystem.Web
     {
         private void Application_Start(object sender, EventArgs e)
         {
+            AutomapperConfig.Init();
+            AutofacConfig.ConfigureContainer();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -19,8 +20,12 @@ namespace AccountingSystem.Web
                 Newtonsoft.Json.ReferenceLoopHandling.Serialize;
             GlobalConfiguration.Configuration.Formatters.Remove(
                 GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+        }
 
-            //GlobalFilters.Filters.Add(new RequireHttpsAttribute());
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            if (Request.Headers["Application"] == null || !Request.Headers["Application"].Equals("Accounting-System"))
+                Response.Redirect("~/error401.html");
         }
     }
 }

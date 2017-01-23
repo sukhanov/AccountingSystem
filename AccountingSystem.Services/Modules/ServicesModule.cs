@@ -1,18 +1,17 @@
 ﻿using AccountingSystem.Services.Implementation;
 using AccountingSystem.Services.Interfaces;
-using Ninject.Modules;
-using Ninject.Web.Common;
+using Autofac;
 
 namespace AccountingSystem.Services.Modules
 {
-    public class ServicesModule : NinjectModule
+    public class ServicesModule : Module
     {
-        public override void Load()
+        protected override void Load(ContainerBuilder builder)
         {
-            Bind<ITransactionService>().To<TransactionService>().InRequestScope();
-            Bind<ICurrencyService>().To<CurrencyService>().InRequestScope();
-            Bind<IClientService>().To<ClientService>().InRequestScope();
-            Bind<IBalanceService>().To<BalanceService>().InRequestScope();
+            builder.RegisterType<TransactionService>().As<ITransactionService>().InstancePerRequest();
+            builder.RegisterType<CurrencyService>().As<ICurrencyService>().InstancePerRequest();
+            builder.RegisterType<ClientService>().As<IClientService>().InstancePerRequest();
+            builder.RegisterType<BalanceService>().As<IBalanceService>().InstancePerRequest();
         }
     }
 }

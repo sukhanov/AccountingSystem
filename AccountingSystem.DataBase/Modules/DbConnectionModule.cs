@@ -1,15 +1,14 @@
 ﻿using AccountingSystem.DataBase.Implementation;
 using AccountingSystem.DataBase.Interfaces;
-using Ninject.Modules;
-using Ninject.Web.Common;
+using Autofac;
 
 namespace AccountingSystem.DataBase.Modules
 {
-    public class DbConnectionModule : NinjectModule
+    public class DbConnectionModule : Module
     {
-        public override void Load()
+        protected override void Load(ContainerBuilder builder)
         {
-            Bind<ICommandExecuter>().To<CommandExecuter>().InRequestScope();
+            builder.RegisterType<CommandExecuter>().As<ICommandExecuter>().InstancePerRequest();
         }
     }
 }
