@@ -94,7 +94,7 @@ function TransactionsService($http) {
                 method: 'GET',
                 url: '/api/transactions/getAll',
                 headers: {
-                    'Application': 'Accounting-System'
+                    'X-Application': 'Accounting-System'
                 }
             }
             return $http(req);
@@ -104,7 +104,7 @@ function TransactionsService($http) {
                 method: 'GET',
                 url: '/api/transactions/getTypesForSelect',
                 headers: {
-                    'Application': 'Accounting-System'
+                    'X-Application': 'Accounting-System'
                 }
             }
             return $http(req);
@@ -114,7 +114,7 @@ function TransactionsService($http) {
                 method: 'GET',
                 url: '/api/transactions/MoveToArchive',
                 headers: {
-                    'Application': 'Accounting-System'
+                    'X-Application': 'Accounting-System'
                 }
             }
             return $http(req);
@@ -130,7 +130,7 @@ function TransactionsService($http) {
                 method: 'POST',
                 url: '/api/transactions/add',
                 headers: {
-                    'Application': 'Accounting-System'
+                    'X-Application': 'Accounting-System'
                 },
                 data: data
             }
@@ -146,7 +146,7 @@ function ClientService($http) {
                 method: 'GET',
                 url: '/api/client/getForSelect',
                 headers: {
-                    'Application': 'Accounting-System'
+                    'X-Application': 'Accounting-System'
                 }
             }
             return $http(req);
@@ -161,7 +161,7 @@ function CurrencyService($http) {
                 method: 'GET',
                 url: '/api/currency/getForSelect',
                 headers: {
-                    'Application': 'Accounting-System'
+                    'X-Application': 'Accounting-System'
                 }
             }
             return $http(req);

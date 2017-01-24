@@ -34,7 +34,7 @@ function BalancesService($http) {
                 method: 'GET',
                 url: '/api/balance/getForClient?clientId=' + clientId,
                 headers: {
-                    'Application': 'Accounting-System'
+                    'X-Application': 'Accounting-System'
                 }
             }
             return $http(req);

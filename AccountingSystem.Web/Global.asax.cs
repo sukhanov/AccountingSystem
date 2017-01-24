@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -8,6 +9,8 @@ namespace AccountingSystem.Web
 {
     public class Global : HttpApplication
     {
+        private const string ROOT_DOCUMENT = "/";
+
         private void Application_Start(object sender, EventArgs e)
         {
             AutomapperConfig.Init();
@@ -24,8 +27,18 @@ namespace AccountingSystem.Web
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            if (Request.Headers["Application"] == null || !Request.Headers["Application"].Equals("Accounting-System"))
-                Response.Redirect("~/error401.html");
+            var url = Request.Url.LocalPath;
+            var pattern = "api";
+
+            var match = Regex.Match(url, pattern);
+
+            if (!match.Success)
+            {
+                if (!System.IO.File.Exists(Context.Server.MapPath(url)))
+                {
+                    Context.RewritePath(ROOT_DOCUMENT);
+                }
+            }
         }
     }
 }

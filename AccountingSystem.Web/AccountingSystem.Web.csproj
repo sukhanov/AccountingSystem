@@ -154,6 +154,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FilterHeader.cs" />
     <Compile Include="Helpers\FilterIPAttribute.cs" />
     <Compile Include="Models\BalanceViewModel.cs" />
     <Compile Include="Models\TransactionGridItemViewModel.cs" />
