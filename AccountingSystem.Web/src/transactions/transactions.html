@@ -6,7 +6,7 @@
                 <option ng-repeat="type in $ctrl.types" value="{{type.Value}}">{{type.Text}}</option>
             </select>
         </div>
-        <div  class="inline-block w150 form-control">
+        <div class="inline-block w150 form-control">
             Currency:
             <select ng-model="$ctrl.newTransaction.currency">
                 <option ng-repeat="currency in $ctrl.currencies" value="{{currency.Value}}">{{currency.Text}}</option>
@@ -15,7 +15,7 @@
         <div class="inline-block w150 form-control">
             Client:
             <select ng-model="$ctrl.newTransaction.client">
-                <option  ng-repeat="client in $ctrl.clients" value="{{client.Value}}">{{client.Text}}</option>
+                <option ng-repeat="client in $ctrl.clients" value="{{client.Value}}">{{client.Text}}</option>
             </select>
         </div>
         <div class="inline-block w150 form-control">
@@ -28,32 +28,32 @@
     <div class="transactions-item">
         <table>
             <colgroup>
-                <col width="130px" />
-                <col width="130px" />
-                <col width="130px" />
-                <col width="150px" />
-                <col width="180px" />
-                <col width="180px" />
+                <col width="130px"/>
+                <col width="130px"/>
+                <col width="130px"/>
+                <col width="150px"/>
+                <col width="180px"/>
+                <col width="180px"/>
             </colgroup>
             <thead>
-                <tr>
-                    <td>Type</td>
-                    <td>Currency</td>
-                    <td>Amount</td>
-                    <td>Client</td>
-                    <td>Date</td>
-                    <td>Archive</td>
-                </tr>
+            <tr>
+                <td>Type</td>
+                <td>Currency</td>
+                <td>Amount</td>
+                <td>Client</td>
+                <td>Date</td>
+                <td>Archive</td>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="transaction in $ctrl.transactions">
-                    <td>{{transaction.Type}}</td>
-                    <td>{{transaction.Currency}}</td>
-                    <td>{{transaction.Amount}}</td>
-                    <td>{{transaction.Client}}</td>
-                    <td>{{transaction.DateTime}}</td>
-                    <td>{{transaction.ArchiveDatetime}}</td>
-                </tr>
+            <tr ng-repeat="transaction in $ctrl.transactions">
+                <td>{{transaction.Type}}</td>
+                <td>{{transaction.Currency}}</td>
+                <td>{{transaction.Amount}}</td>
+                <td>{{transaction.Client}}</td>
+                <td>{{transaction.DateTime}}</td>
+                <td>{{transaction.ArchiveDatetime}}</td>
+            </tr>
             </tbody>
         </table>
     </div>

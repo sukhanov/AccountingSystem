@@ -17,7 +17,8 @@ var accountingSystemApp = angular
                 controller: TransactionsController,
                 controllerAs: '$ctrl',
                 templateUrl: 'src/transactions/transactions.html',
-                onEnter: function ($window) { $window.document.title = "Transactions"; }
+                onEnter: function ($window) { $window.document.title = "Transactions"; },
+                resolve: TransactionsController.resolve
             })
              .state('balances',
             {
