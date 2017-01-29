@@ -1,55 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using AccountingSystem.DataBase.Interfaces;
+﻿using System.Collections.Generic;
+using AccountingSystem.Models;
+using AccountingSystem.Repositories.Interfaces;
 using AccountingSystem.Services.Interfaces;
-using AccountingSystem.Services.Models;
 
 namespace AccountingSystem.Services.Implementation
 {
     public class BalanceService : IBalanceService
     {
-        private readonly ICommandExecuter _executer;
+        private readonly IBalanceRepository _balanceRepository;
 
-        public BalanceService(ICommandExecuter executer)
+        public BalanceService(IBalanceRepository balanceRepository)
         {
-            _executer = executer;
+            _balanceRepository = balanceRepository;
         }
 
-        public IEnumerable<BalanceModel> GetForClient(int clientId)
+        public IEnumerable<Balance> GetForClient(int clientId)
         {
-            var result = new List<BalanceModel>();
-           
-            var command = new SqlCommand
-            {
-                CommandText = $"SELECT * FROM GetClientBalance WHERE ClientId = {clientId}"
-            };
-
-            var reader = _executer.Execute(command);
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    try
-                    {
-                        result.Add(new BalanceModel
-                        {
-                            Currency = (string)reader["Code"],
-                            Amount = (decimal)reader["Amount"]
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine("Ошибка при получении данных: " + e.Message);
-                    }
-                }
-            }
-
-            reader.Close();
-            _executer.CloseConnection();
-
-            return result;
+            return _balanceRepository.GetByClientId(clientId);
         }
     }
 }

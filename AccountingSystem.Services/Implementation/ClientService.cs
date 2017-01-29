@@ -1,54 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using AccountingSystem.DataBase.Interfaces;
+﻿using System.Collections.Generic;
+using AccountingSystem.Models;
+using AccountingSystem.Repositories.Interfaces;
 using AccountingSystem.Services.Interfaces;
-using AccountingSystem.Services.Models;
 
 namespace AccountingSystem.Services.Implementation
 {
     public class ClientService : IClientService
     {
-        private readonly ICommandExecuter _executer;
+        private readonly IClientRepository _clientRepository;
 
-        public ClientService(ICommandExecuter executer)
+        public ClientService(IClientRepository clientRepository)
         {
-            _executer = executer;
+            _clientRepository = clientRepository;
         }
 
-        public IEnumerable<ClientModel> GetAll()
+        public IEnumerable<Client> GetAll()
         {
-            var result = new List<ClientModel>();
-            var command = new SqlCommand
-            {
-                CommandText = "SELECT * FROM Clients"
-            };
-
-            var reader = _executer.Execute(command);
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    try
-                    {
-                        result.Add(new ClientModel
-                        {
-                            Id = (int) reader["Id"],
-                            Name = reader["Name"].ToString()
-                        });
-                    }
-                     catch (Exception e)
-                    {
-                        Debug.WriteLine("Ошибка при получении данных: " + e.Message);
-                    }
-                }
-            }
-
-            reader.Close();
-            _executer.CloseConnection();
-
-            return result;
+            return _clientRepository.GetAll();
         }
     }
 }

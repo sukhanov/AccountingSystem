@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Web.Http;
 using System.Web.Mvc;
-using AccountingSystem.DataBase.Modules;
+using AccountingSystem.Repositories.Modules;
 using AccountingSystem.Services.Modules;
 using Autofac;
 using Autofac.Integration.Mvc;
@@ -15,11 +15,12 @@ namespace AccountingSystem.Web
         {
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterModule(new DbConnectionModule());
+
+            builder.RegisterModule(new RepositoriesModule());
             builder.RegisterModule(new ServicesModule());
 
             var container = builder.Build();
-            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container); ;
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
     }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using AccountingSystem.Services.Models;
+using AccountingSystem.Models;
 
 namespace AccountingSystem.Services.Interfaces
 {
     public interface IBalanceService
     {
-        IEnumerable<BalanceModel> GetForClient(int clientId);
+        IEnumerable<Balance> GetForClient(int clientId);
     }
 }

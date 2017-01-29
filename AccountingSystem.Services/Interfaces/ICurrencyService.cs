@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using AccountingSystem.Services.Models;
+using AccountingSystem.Models;
 
 namespace AccountingSystem.Services.Interfaces
 {
     public interface ICurrencyService
     {
-        IEnumerable<CurrencyModel> GetAll();
+        IEnumerable<Currency> GetAll();
     }
 }

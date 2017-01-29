@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using AccountingSyatem.Shared.Automapper;
+using AccountingSystem.Models;
 using AccountingSystem.Services.Interfaces;
-using AccountingSystem.Services.Models;
 using AccountingSystem.Shared.Infra;
 using AccountingSystem.Web.Models;
 
@@ -58,21 +60,24 @@ namespace AccountingSystem.Web.Controllers.api
         }
 
         [HttpPost]
-        public object Add(NewTransaction model)
+        public HttpResponseMessage Add(NewTransactionModel model)
         {
+            string error;
+
             try
             {
-                _transactionService.Create(model.MapTo(new TransactionModel()));
-                return new {success = true};
+                error = _transactionService.Create(model.MapTo(new NewTransaction()));
             }
-            catch (Exception e)
+            catch(ServiceException e)
             {
-                return new
-                {
-                    message = e.Message,
-                    success = false
-                };
+                error = e.Message;
             }
+            catch(Exception e)
+            {
+                error = "Failed create transaction";
+            }
+
+            return string.IsNullOrWhiteSpace(error) ? Request.CreateResponse(HttpStatusCode.OK) : Request.CreateErrorResponse(HttpStatusCode.InternalServerError, error);
         }
     }
 }

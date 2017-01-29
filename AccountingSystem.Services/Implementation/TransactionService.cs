@@ -1,96 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using AccountingSystem.DataBase.Interfaces;
+using System.Runtime.Remoting;
+using AccountingSystem.Models;
+using AccountingSystem.Repositories.Interfaces;
 using AccountingSystem.Services.Interfaces;
-using AccountingSystem.Services.Models;
+using AccountingSystem.Shared.Infra;
 
 namespace AccountingSystem.Services.Implementation
 {
     public class TransactionService : ITransactionService
     {
-        private readonly ICommandExecuter _executer;
+        private readonly ITransactionRepository _transactionRepository;
+        private readonly IBalanceRepository _balanceRepository;
+        private readonly IRateRepository _rateRepository;
 
-        public TransactionService(ICommandExecuter executer)
+        public TransactionService(ITransactionRepository transactionRepository, IBalanceRepository balanceRepository, IRateRepository rateRepository)
         {
-            _executer = executer;
+            _transactionRepository = transactionRepository;
+            _balanceRepository = balanceRepository;
+            _rateRepository = rateRepository;
         }
 
-        public void Create(TransactionModel model)
+        public string Create(NewTransaction tran)
         {
-            var dt = new DataTable();
-            dt.Columns.Add("Type");
-            dt.Columns.Add("ClientId");
-            dt.Columns.Add("ClientToId");
-            dt.Columns.Add("Amount");
-            dt.Columns.Add("CurrencyId");
-            dt.Rows.Add(model.Type, model.ClientId, model.ClientToId, model.Amount, model.CurrencyId);
+            var balance = _balanceRepository.GetById(tran.BalanceId);
+            if (balance == null)
+                throw new Exception("Balance not found");
 
-            var param = new SqlParameter("Transaction", dt);
-            var command = new SqlCommand
-            {
-                CommandType = CommandType.StoredProcedure,
-                CommandText = "CreateTransaction"
-            };
-            command.Parameters.Add(param);
+            var rate = _rateRepository.GetByCurrencies(tran.CurrencyId, balance.CurrencyId);
+            if (tran.CurrencyId == balance.CurrencyId)
+                rate = new Rate { Val = 1 };
+            if (rate == null)
+                throw new Exception("Rate not found");
 
-            var result = _executer.Execute(command);
+            var amount = tran.Amount * (decimal)rate.Val;
+
+            if (tran.Type == (int)TransactionType.Withdraw)
+                CheckAmount(balance, amount);
+
+            tran.Amount = amount;
+
+            return _transactionRepository.Create(tran);
         }
 
         public void MoveToArchive()
         {
-            var command = new SqlCommand
-            {
-                CommandType = CommandType.StoredProcedure,
-                CommandText = "MoveTransactionToArchive"
-            };
-
-            var result = _executer.Execute(command);
+            _transactionRepository.MoveTorchive();
         }
 
-        public List<TransactionTableModel> GetAll()
+        public IEnumerable<Transaction> GetAll()
         {
-            var result = new List<TransactionTableModel>();
-            var command = new SqlCommand
-            {
-                CommandText = "SELECT * FROM GetAllTransactions"
-            };
+            return _transactionRepository.GetAll();
+        }
 
-            var reader = _executer.Execute(command);
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    try
-                    {
-                        var tr = new TransactionTableModel
-                        {
-                            Amount = (decimal)reader["Amount"],
-                            Client = reader["ClientName"].ToString(),
-                            ClientTo = reader["ClientToName"].ToString(),
-                            Currency = reader["Currency"].ToString(),
-                            Type = (int)reader["Type"],
-                            DateTime = (DateTime)reader["DateTime"]
-                        };
-                        var archiveDatetime = reader.GetOrdinal("ArchiveDateTime");
-                        if (!reader.IsDBNull(archiveDatetime))
-                            tr.ArchiveDatetime = reader.GetDateTime(archiveDatetime);
-
-                        result.Add(tr);
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine("Ошибка при получении данных: " + e.Message);
-                    }
-                }
-            }
-
-            reader.Close();
-            _executer.CloseConnection();
-
-            return result;
+        private void CheckAmount(Balance balance, decimal amount)
+        {
+            if (balance.Amount < amount)
+                throw new ServerException("It is impossible to write off more than there is in the account");
         }
     }
 }

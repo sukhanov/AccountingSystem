@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using AccountingSystem.Services.Models;
+using AccountingSystem.Models;
 
 namespace AccountingSystem.Services.Interfaces
 {
     public interface ITransactionService
     {
-        void Create(TransactionModel model);
+        string Create(NewTransaction tran);
         void MoveToArchive();
-        List<TransactionTableModel> GetAll();
+        IEnumerable<Transaction> GetAll();
     }
 }

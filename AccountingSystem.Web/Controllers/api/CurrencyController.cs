@@ -1,8 +1,4 @@
 ﻿using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Mvc;
 using AccountingSystem.Services.Interfaces;
 
 namespace AccountingSystem.Web.Controllers.api

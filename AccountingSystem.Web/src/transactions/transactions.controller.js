@@ -3,6 +3,7 @@
 moduleServices
     .service('transactionsService', ['$http', TransactionsService])
     .service('currencyService', ['$http', CurrencyService])
+    .service('balanceService', ['$http', BalanceService])
     .service('clientService', ['$http', ClientService]);
 
 TransactionsController.resolve = {
@@ -17,7 +18,7 @@ TransactionsController.resolve = {
     }
 }
 
-function TransactionsController($scope, transactionsService, clientService, currencyService, clients, currencies, types) {
+function TransactionsController($scope, transactionsService, currencyService, balanceService, clientService, clients, currencies, types) {
     if (clients == undefined || currencies == undefined || types == undefined) {
         window.location = "error401.html";
     }
@@ -26,6 +27,7 @@ function TransactionsController($scope, transactionsService, clientService, curr
         amount: 0,
         client: 0,
         currency: 0,
+        balance: 0,
         type: undefined
     };
 
@@ -34,6 +36,7 @@ function TransactionsController($scope, transactionsService, clientService, curr
     self.transactions = [];
     self.clients = clients;
     self.currencies = currencies;
+    self.balances = [];
     self.types = types;
     self.updateTransactionsList = function () {
         transactionsService.getTransactions().then(function (dataResponse) {
@@ -55,7 +58,7 @@ function TransactionsController($scope, transactionsService, clientService, curr
             return;
         }
         transactionsService.create(self.newTransaction).then(function (response) {
-            if (response.data.success) {
+            if (response.data.Message==undefined) {
                 self.updateTransactionsList();
                 setDefaulTransaction();
             }
@@ -63,10 +66,27 @@ function TransactionsController($scope, transactionsService, clientService, curr
                 alert(response.data.message);
         });
     };
+    self.changeClient = function () {
+        balanceService.getByClient(self.newTransaction.client).then(function (data) {
+            self.balances = data;
+            if (self.balances.length > 0)
+                self.newTransaction.balance = self.balances[0].Value;
+
+        });
+    };
     self.updateTransactionsList();
 
-    if (self.clients.length > 0)
+    if (self.clients.length > 0) {
         defaultTr.client = self.clients[0].Value;
+
+        balanceService.getByClient(defaultTr.client).then(function (data) {
+            self.balances = data;
+            if (self.balances.length > 0)
+                defaultTr.balance = self.balances[0].Value;
+
+            setDefaulTransaction(); 
+        });
+    }
     if (self.currencies.length > 0)
         defaultTr.currency = self.currencies[0].Value;
     if (self.types.length > 0)
@@ -79,7 +99,8 @@ function TransactionsController($scope, transactionsService, clientService, curr
             amount: defaultTr.amount,
             client: defaultTr.client,
             currency: defaultTr.currency,
-            type: defaultTr.type
+            type: defaultTr.type,
+            balance: defaultTr.balance
         };
     }
 }
@@ -127,6 +148,7 @@ function TransactionsService($http) {
                 Client: parseInt(form.client),
                 Currency: parseInt(form.currency),
                 Type: parseInt(form.type),
+                Balance: parseInt(form.balance)
             }
             var req = {
                 method: 'POST',
@@ -167,6 +189,26 @@ function CurrencyService($http) {
             var req = {
                 method: 'GET',
                 url: '/api/currency/getForSelect',
+                headers: {
+                    'X-Application': 'Accounting-System'
+                }
+            }
+            return $http(req).then(function (response) {
+                return response.data;
+            }
+            , function (response) {
+                return undefined;
+            });
+        }
+    }
+}
+
+function BalanceService($http) {
+    return {
+        getByClient: function (clientId) {
+            var req = {
+                method: 'GET',
+                url: '/api/balance/GetForClient?clientId=' + clientId,
                 headers: {
                     'X-Application': 'Accounting-System'
                 }

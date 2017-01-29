@@ -1,56 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Runtime.Versioning;
-using AccountingSystem.DataBase.Interfaces;
+﻿using System.Collections.Generic;
+using AccountingSystem.Models;
+using AccountingSystem.Repositories.Interfaces;
 using AccountingSystem.Services.Interfaces;
-using AccountingSystem.Services.Models;
 
 namespace AccountingSystem.Services.Implementation
 {
     public class CurrencyService : ICurrencyService
     {
-        private readonly ICommandExecuter _executer;
+        private readonly ICurrencyRepository _currencyRepository;
 
-        public CurrencyService(ICommandExecuter executer)
+        public CurrencyService(ICurrencyRepository currencyRepository)
         {
-            _executer = executer;
+            _currencyRepository = currencyRepository;
         }
 
-        public IEnumerable<CurrencyModel> GetAll()
+        public IEnumerable<Currency> GetAll()
         {
-            var result = new List<CurrencyModel>();
-            var command = new SqlCommand
-            {
-                CommandText = "SELECT * FROM Currencies"
-            };
-
-            var reader = _executer.Execute(command);
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    try
-                    {
-                        result.Add(new CurrencyModel
-                        {
-                            Id = (int) reader["Id"],
-                            Code = reader["Code"].ToString()
-                        });
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.WriteLine("Ошибка при получении данных: " + e.Message);
-                    }
-                }
-            }
-
-            reader.Close();
-            _executer.CloseConnection();
-
-            return result;
+            return _currencyRepository.GetAll();
         }
     }
 }

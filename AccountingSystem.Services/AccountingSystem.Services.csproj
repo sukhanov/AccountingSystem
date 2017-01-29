@@ -51,19 +51,18 @@
     <Compile Include="Interfaces\IClientService.cs" />
     <Compile Include="Interfaces\ICurrencyService.cs" />
     <Compile Include="Interfaces\ITransactionService.cs" />
-    <Compile Include="Models\BalanceModel.cs" />
-    <Compile Include="Models\ClientModel.cs" />
-    <Compile Include="Models\CurrencyModel.cs" />
-    <Compile Include="Models\TransactionModel.cs" />
-    <Compile Include="Models\TransactionTableModel.cs" />
     <Compile Include="Modules\ServicesModule.cs" />
     <Compile Include="Implementation\TransactionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AccountingSystem.DataBase\AccountingSystem.DataBase.csproj">
-      <Project>{60BDF4F0-CEDF-4D6D-AA8D-F02B8DB85B12}</Project>
-      <Name>AccountingSystem.DataBase</Name>
+    <ProjectReference Include="..\AccountingSystem.Models\AccountingSystem.Models.csproj">
+      <Project>{71A1E203-96D8-48FE-9F7C-AC5472F4815E}</Project>
+      <Name>AccountingSystem.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountingSystem.Repositories\AccountingSystem.Repositories.csproj">
+      <Project>{F4B043A6-CFE0-4BDD-BE21-074BB190DB51}</Project>
+      <Name>AccountingSystem.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\AccountingSystem.Shared.Infra\AccountingSystem.Shared.Infra.csproj">
       <Project>{8F6049A2-D756-409C-8F55-39750370F7A9}</Project>

@@ -158,7 +158,7 @@
     <Compile Include="Helpers\FilterIPAttribute.cs" />
     <Compile Include="Models\BalanceViewModel.cs" />
     <Compile Include="Models\TransactionGridItemViewModel.cs" />
-    <Compile Include="Models\NewTransaction.cs" />
+    <Compile Include="Models\NewTransactionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +176,13 @@
       <Project>{C0BD6C7A-EA83-448C-9A1A-3DA313519948}</Project>
       <Name>AccountingSyatem.Shared.Automapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AccountingSystem.DataBase\AccountingSystem.DataBase.csproj">
-      <Project>{60BDF4F0-CEDF-4D6D-AA8D-F02B8DB85B12}</Project>
-      <Name>AccountingSystem.DataBase</Name>
+    <ProjectReference Include="..\AccountingSystem.Models\AccountingSystem.Models.csproj">
+      <Project>{71A1E203-96D8-48FE-9F7C-AC5472F4815E}</Project>
+      <Name>AccountingSystem.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AccountingSystem.Repositories\AccountingSystem.Repositories.csproj">
+      <Project>{F4B043A6-CFE0-4BDD-BE21-074BB190DB51}</Project>
+      <Name>AccountingSystem.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\AccountingSystem.Services\AccountingSystem.Services.csproj">
       <Project>{257E3609-C129-4C50-B603-A8202FC37F1F}</Project>
