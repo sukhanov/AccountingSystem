@@ -58,12 +58,10 @@ function TransactionsController($scope, transactionsService, currencyService, ba
             return;
         }
         transactionsService.create(self.newTransaction).then(function (response) {
-            if (response.data.Message==undefined) {
                 self.updateTransactionsList();
                 setDefaulTransaction();
-            }
-            else
-                alert(response.data.message);
+        }, function(response) {
+            alert(response.data.Message);
         });
     };
     self.changeClient = function () {

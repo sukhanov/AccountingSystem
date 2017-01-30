@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting;
 using AccountingSystem.Models;
 using AccountingSystem.Repositories.Interfaces;
 using AccountingSystem.Services.Interfaces;
@@ -25,13 +24,13 @@ namespace AccountingSystem.Services.Implementation
         {
             var balance = _balanceRepository.GetById(tran.BalanceId);
             if (balance == null)
-                throw new Exception("Balance not found");
+                throw new ServiceException("Balance not found");
 
             var rate = _rateRepository.GetByCurrencies(tran.CurrencyId, balance.CurrencyId);
             if (tran.CurrencyId == balance.CurrencyId)
                 rate = new Rate { Val = 1 };
             if (rate == null)
-                throw new Exception("Rate not found");
+                throw new ServiceException("Rate not found");
 
             var amount = tran.Amount * (decimal)rate.Val;
 
@@ -56,7 +55,7 @@ namespace AccountingSystem.Services.Implementation
         private void CheckAmount(Balance balance, decimal amount)
         {
             if (balance.Amount < amount)
-                throw new ServerException("It is impossible to write off more than there is in the account");
+                throw new ServiceException("It is impossible to write off more than there is in the account");
         }
     }
 }

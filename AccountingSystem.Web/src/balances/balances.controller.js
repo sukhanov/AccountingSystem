@@ -3,10 +3,16 @@
 moduleServices
     .service('balancesService', ['$http', BalancesService]);
 
-function BalancesController($scope, balancesService, clientService) {
+BalancesController.resolve = {
+    clients: function (clientService) {
+        return clientService.getForSelect();
+    }
+}
+
+function BalancesController($scope, balancesService, clientService, clients) {
     var self = this;
     self.client = 0;
-    self.clients = [];
+    self.clients = clients;
     self.balances = [];
     self.changeClient = function () {
         balancesService.getBalances(self.client).then(function (dataResponse) {
@@ -14,17 +20,17 @@ function BalancesController($scope, balancesService, clientService) {
         });
     };
 
-    function getSelects() {
-        clientService.getForSelect().then(function (dataResponse) {
-            self.clients = dataResponse.data;
-            if (self.clients.length > 0) {
+    function init() {
+        if(self.clients == undefined)
+            window.location = "error401.html";
+        
+        if (self.clients.length > 0) {
                 self.client = self.clients[0].Value;
                 self.changeClient();
             }
-        });
     }
 
-    getSelects();
+    init();
 }
 
 function BalancesService($http) {
@@ -32,7 +38,7 @@ function BalancesService($http) {
         getBalances: function (clientId) {
             var req = {
                 method: 'GET',
-                url: '/api/balance/getForClient?clientId=' + clientId,
+                url: '/api/balance/getAmountForClient?clientId=' + clientId,
                 headers: {
                     'X-Application': 'Accounting-System'
                 }
