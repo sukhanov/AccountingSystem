@@ -19,10 +19,7 @@ namespace AccountingSystem.Web
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling =
-                Newtonsoft.Json.ReferenceLoopHandling.Serialize;
-            GlobalConfiguration.Configuration.Formatters.Remove(
-                GlobalConfiguration.Configuration.Formatters.XmlFormatter);
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
